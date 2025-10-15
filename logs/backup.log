@@ -1,0 +1,30 @@
+set -o pipefail; /usr/bin/mariadb-dump --user=_7cc2c1d0fb897462 --host=127.0.0.1 --port=3306 --password=********** --single-transaction --quick --lock-tables=false _7cc2c1d0fb897462 | /usr/bin/gzip >> ./medisync.local/private/backups/20251013_120002-medisync_local-database.sql.gz
+
+Backup Summary for medisync.local at 2025-10-13 12:00:04.719751
+Config  : ./medisync.local/private/backups/20251013_120002-medisync_local-site_config_backup.json 218.0B
+Database: ./medisync.local/private/backups/20251013_120002-medisync_local-database.sql.gz         237.6KiB
+Backup for Site medisync.local has been successfully completed
+set -o pipefail; /usr/bin/mariadb-dump --user=_7cc2c1d0fb897462 --host=127.0.0.1 --port=3306 --password=********** --single-transaction --quick --lock-tables=false _7cc2c1d0fb897462 | /usr/bin/gzip >> ./medisync.local/private/backups/20251013_180002-medisync_local-database.sql.gz
+
+Backup Summary for medisync.local at 2025-10-13 18:00:04.241801
+Config  : ./medisync.local/private/backups/20251013_180002-medisync_local-site_config_backup.json 218.0B
+Database: ./medisync.local/private/backups/20251013_180002-medisync_local-database.sql.gz         237.6KiB
+Backup for Site medisync.local has been successfully completed
+set -o pipefail; /usr/bin/mariadb-dump --user=_7cc2c1d0fb897462 --host=127.0.0.1 --port=3306 --password=********** --single-transaction --quick --lock-tables=false _7cc2c1d0fb897462 | /usr/bin/gzip >> ./medisync.local/private/backups/20251014_120002-medisync_local-database.sql.gz
+
+Backup Summary for medisync.local at 2025-10-14 12:00:02.708846
+Config  : ./medisync.local/private/backups/20251014_120002-medisync_local-site_config_backup.json 218.0B
+Database: ./medisync.local/private/backups/20251014_120002-medisync_local-database.sql.gz         241.4KiB
+Backup for Site medisync.local has been successfully completed
+set -o pipefail; /usr/bin/mariadb-dump --user=_7cc2c1d0fb897462 --host=127.0.0.1 --port=3306 --password=********** --single-transaction --quick --lock-tables=false _7cc2c1d0fb897462 | /usr/bin/gzip >> ./medisync.local/private/backups/20251014_180003-medisync_local-database.sql.gz
+
+Backup Summary for medisync.local at 2025-10-14 18:00:06.151207
+Config  : ./medisync.local/private/backups/20251014_180003-medisync_local-site_config_backup.json 218.0B
+Database: ./medisync.local/private/backups/20251014_180003-medisync_local-database.sql.gz         242.8KiB
+Backup for Site medisync.local has been successfully completed
+set -o pipefail; /usr/bin/mariadb-dump --user=_7cc2c1d0fb897462 --host=127.0.0.1 --port=3306 --password=********** --single-transaction --quick --lock-tables=false _7cc2c1d0fb897462 | /usr/bin/gzip >> ./medisync.local/private/backups/20251015_120002-medisync_local-database.sql.gz
+
+Backup Summary for medisync.local at 2025-10-15 12:00:02.588895
+Config  : ./medisync.local/private/backups/20251015_120002-medisync_local-site_config_backup.json 235.0B
+Database: ./medisync.local/private/backups/20251015_120002-medisync_local-database.sql.gz         250.7KiB
+Backup for Site medisync.local has been successfully completed

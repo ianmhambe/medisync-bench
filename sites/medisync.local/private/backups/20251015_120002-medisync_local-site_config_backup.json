@@ -1,0 +1,11 @@
+{
+ "db_name": "_7cc2c1d0fb897462",
+ "db_password": "if4b19wJtMK2Yfb1",
+ "db_type": "mariadb",
+ "developer_mode": 1,
+ "allow_cors": "*",
+ "cors_allowed_origins": ["http://localhost:5173"],
+ "allow_guest_access": 1,
+ "ignore_csrf": 1
+
+}

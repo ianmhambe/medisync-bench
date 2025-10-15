@@ -1,0 +1,21 @@
+{
+    "frappe": {
+        "resolution": {
+            "commit_hash": null,
+            "branch": null
+        },
+        "required": [],
+        "idx": 1,
+        "version": "15.85.1"
+    },
+    "medisync_backend": {
+        "is_repo": true,
+        "resolution": {
+            "commit_hash": "61557b43c9f23698b6b15b661aa0480d37098bcd",
+            "branch": "develop"
+        },
+        "required": [],
+        "idx": 2,
+        "version": "0.0.1"
+    }
+}

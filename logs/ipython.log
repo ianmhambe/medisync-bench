@@ -1,0 +1,885 @@
+2025-10-12 22:18:05,961 INFO ipython === bench console session ===
+2025-10-12 22:18:05,962 INFO ipython import frappe
+
+def create_all_doctypes():
+    """Create all MediSync DocTypes"""
+    
+    # List of doctypes to create
+    doctypes_config = {
+        'Patient': {
+            'autoname': 'format:PAT-{#####}',
+            'fields': [
+                {'fieldname': 'patient_details', 'label': 'Patient Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'patient_name', 'label': 'Patient Name', 'fieldtype': 'Data', 'reqd': 1, 'in_list_view': 1, 'bold': 1},
+                {'fieldname': 'age', 'label': 'Age', 'fieldtype': 'Int', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'phone', 'label': 'Phone Number', 'fieldtype': 'Data', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'email', 'label': 'Email Address', 'fieldtype': 'Data', 'reqd': 1, 'options': 'Email'},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Visit Information'},
+                {'fieldname': 'last_visit', 'label': 'Last Visit Date', 'fieldtype': 'Date', 'in_list_view': 1},
+                {'fieldname': 'address', 'label': 'Address', 'fieldtype': 'Text'}
+            ]
+        },
+        'Doctor': {
+            'autoname': 'format:DOC-{#####}',
+            'fields': [
+                {'fieldname': 'doctor_details', 'label': 'Doctor Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'doctor_name', 'label': 'Doctor Name', 'fieldtype': 'Data', 'reqd': 1, 'in_list_view': 1, 'bold': 1},
+                {'fieldname': 'specialty', 'label': 'Specialty', 'fieldtype': 'Select', 
+                 'options': '\nCardiology\nPediatrics\nOrthopedics\nDermatology\nNeurology\nGeneral Medicine', 
+                 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'experience', 'label': 'Experience', 'fieldtype': 'Data', 'in_list_view': 1},
+                {'fieldname': 'available', 'label': 'Available', 'fieldtype': 'Check', 'default': 1, 'in_list_view': 1},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Additional Information'},
+                {'fieldname': 'rating', 'label': 'Rating', 'fieldtype': 'Float', 'precision': 1},
+                {'fieldname': 'patients_count', 'label': 'Total Patients', 'fieldtype': 'Int', 'default': 0},
+                {'fieldname': 'column_break_2', 'fieldtype': 'Column Break'},
+                {'fieldname': 'location', 'label': 'Location', 'fieldtype': 'Data'},
+                {'fieldname': 'phone', 'label': 'Phone Number', 'fieldtype': 'Data'}
+            ]
+        },
+        'Appointment': {
+            'autoname': 'format:APT-{#####}',
+            'fields': [
+                {'fieldname': 'appointment_details', 'label': 'Appointment Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'patient', 'label': 'Patient', 'fieldtype': 'Link', 'options': 'Patient', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'doctor', 'label': 'Doctor', 'fieldtype': 'Link', 'options': 'Doctor', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'appointment_date', 'label': 'Appointment Date', 'fieldtype': 'Date', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'appointment_time', 'label': 'Appointment Time', 'fieldtype': 'Time', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Appointment Type & Status'},
+                {'fieldname': 'appointment_type', 'label': 'Appointment Type', 'fieldtype': 'Select', 
+                 'options': '\nConsultation\nFollow-up\nCheck-up\nTreatment\nEmergency', 'default': 'Consultation', 'reqd': 1},
+                {'fieldname': 'specialty', 'label': 'Specialty', 'fieldtype': 'Data', 'fetch_from': 'doctor.specialty', 'read_only': 1},
+                {'fieldname': 'column_break_2', 'fieldtype': 'Column Break'},
+                {'fieldname': 'status', 'label': 'Status', 'fieldtype': 'Select', 
+                 'options': '\nPending\nConfirmed\nCompleted\nCancelled', 'default': 'Pending', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'section_break_3', 'fieldtype': 'Section Break', 'label': 'Additional Notes'},
+                {'fieldname': 'notes', 'label': 'Notes', 'fieldtype': 'Text Editor'}
+            ]
+        },
+        'Medical Record': {
+            'autoname': 'format:MR-{#####}',
+            'fields': [
+                {'fieldname': 'record_details', 'label': 'Record Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'patient', 'label': 'Patient', 'fieldtype': 'Link', 'options': 'Patient', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'doctor', 'label': 'Doctor', 'fieldtype': 'Link', 'options': 'Doctor', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'record_date', 'label': 'Record Date', 'fieldtype': 'Date', 'reqd': 1, 'default': 'Today', 'in_list_view': 1},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Record Type'},
+                {'fieldname': 'record_type', 'label': 'Record Type', 'fieldtype': 'Select', 
+                 'options': '\nLab Results\nX-Ray\nMRI\nCT Scan\nPrescription\nDiagnosis', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'category', 'label': 'Category', 'fieldtype': 'Select', 
+                 'options': '\nLaboratory\nImaging\nMedication\nDiagnosis\nSurgery', 'reqd': 1},
+                {'fieldname': 'section_break_3', 'fieldtype': 'Section Break', 'label': 'Description'},
+                {'fieldname': 'description', 'label': 'Description', 'fieldtype': 'Text Editor'},
+                {'fieldname': 'section_break_4', 'fieldtype': 'Section Break', 'label': 'File Attachment'},
+                {'fieldname': 'file_attachment', 'label': 'File Attachment', 'fieldtype': 'Attach'},
+                {'fieldname': 'file_size', 'label': 'File Size', 'fieldtype': 'Data', 'read_only': 1}
+            ]
+        }
+    }
+    
+    for doctype_name, config in doctypes_config.items():
+        try:
+            # Check if doctype already exists
+            if frappe.db.exists('DocType', doctype_name):
+                print(f"DocType '{doctype_name}' already exists. Skipping...")
+                continue
+            
+            # Create new doctype
+            doc = frappe.get_doc({
+                'doctype': 'DocType',
+                'name': doctype_name,
+                'module': 'MediSync Backend',
+                'custom': 0,
+                'istable': 0,
+                'editable_grid': 1,
+                'track_changes': 1,
+                'naming_rule': 'Expression',
+                'autoname': config['autoname'],
+                'fields': config['fields'],
+                'permissions': [
+                    {
+                        'role': 'System Manager',
+                        'read': 1,
+                        'write': 1,
+                        'create': 1,
+                        'delete': 1
+                    }
+                ]
+            })
+            
+            doc.insert()
+            frappe.db.commit()
+            print(f"✓ DocType '{doctype_name}' created successfully!")
+            
+        except Exception as e:
+            print(f"✗ Error creating DocType '{doctype_name}': {str(e)}")
+            frappe.db.rollback()
+
+# Run the function
+create_all_doctypes()
+2025-10-12 22:18:05,962 INFO ipython === session end ===
+2025-10-12 22:24:52,800 INFO ipython === bench console session ===
+2025-10-12 22:24:52,801 INFO ipython import frappe
+
+def create_all_doctypes():
+    """Create all MediSync DocTypes"""
+    
+    # List of doctypes to create
+    doctypes_config = {
+        'Patient': {
+            'autoname': 'format:PAT-{#####}',
+            'fields': [
+                {'fieldname': 'patient_details', 'label': 'Patient Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'patient_name', 'label': 'Patient Name', 'fieldtype': 'Data', 'reqd': 1, 'in_list_view': 1, 'bold': 1},
+                {'fieldname': 'age', 'label': 'Age', 'fieldtype': 'Int', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'phone', 'label': 'Phone Number', 'fieldtype': 'Data', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'email', 'label': 'Email Address', 'fieldtype': 'Data', 'reqd': 1, 'options': 'Email'},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Visit Information'},
+                {'fieldname': 'last_visit', 'label': 'Last Visit Date', 'fieldtype': 'Date', 'in_list_view': 1},
+                {'fieldname': 'address', 'label': 'Address', 'fieldtype': 'Text'}
+            ]
+        },
+        'Doctor': {
+            'autoname': 'format:DOC-{#####}',
+            'fields': [
+                {'fieldname': 'doctor_details', 'label': 'Doctor Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'doctor_name', 'label': 'Doctor Name', 'fieldtype': 'Data', 'reqd': 1, 'in_list_view': 1, 'bold': 1},
+                {'fieldname': 'specialty', 'label': 'Specialty', 'fieldtype': 'Select', 
+                 'options': '\nCardiology\nPediatrics\nOrthopedics\nDermatology\nNeurology\nGeneral Medicine', 
+                 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'experience', 'label': 'Experience', 'fieldtype': 'Data', 'in_list_view': 1},
+                {'fieldname': 'available', 'label': 'Available', 'fieldtype': 'Check', 'default': 1, 'in_list_view': 1},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Additional Information'},
+                {'fieldname': 'rating', 'label': 'Rating', 'fieldtype': 'Float', 'precision': 1},
+                {'fieldname': 'patients_count', 'label': 'Total Patients', 'fieldtype': 'Int', 'default': 0},
+                {'fieldname': 'column_break_2', 'fieldtype': 'Column Break'},
+                {'fieldname': 'location', 'label': 'Location', 'fieldtype': 'Data'},
+                {'fieldname': 'phone', 'label': 'Phone Number', 'fieldtype': 'Data'}
+            ]
+        },
+        'Appointment': {
+            'autoname': 'format:APT-{#####}',
+            'fields': [
+                {'fieldname': 'appointment_details', 'label': 'Appointment Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'patient', 'label': 'Patient', 'fieldtype': 'Link', 'options': 'Patient', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'doctor', 'label': 'Doctor', 'fieldtype': 'Link', 'options': 'Doctor', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'appointment_date', 'label': 'Appointment Date', 'fieldtype': 'Date', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'appointment_time', 'label': 'Appointment Time', 'fieldtype': 'Time', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Appointment Type & Status'},
+                {'fieldname': 'appointment_type', 'label': 'Appointment Type', 'fieldtype': 'Select', 
+                 'options': '\nConsultation\nFollow-up\nCheck-up\nTreatment\nEmergency', 'default': 'Consultation', 'reqd': 1},
+                {'fieldname': 'specialty', 'label': 'Specialty', 'fieldtype': 'Data', 'fetch_from': 'doctor.specialty', 'read_only': 1},
+                {'fieldname': 'column_break_2', 'fieldtype': 'Column Break'},
+                {'fieldname': 'status', 'label': 'Status', 'fieldtype': 'Select', 
+                 'options': '\nPending\nConfirmed\nCompleted\nCancelled', 'default': 'Pending', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'section_break_3', 'fieldtype': 'Section Break', 'label': 'Additional Notes'},
+                {'fieldname': 'notes', 'label': 'Notes', 'fieldtype': 'Text Editor'}
+            ]
+        },
+        'Medical Record': {
+            'autoname': 'format:MR-{#####}',
+            'fields': [
+                {'fieldname': 'record_details', 'label': 'Record Details', 'fieldtype': 'Section Break'},
+                {'fieldname': 'patient', 'label': 'Patient', 'fieldtype': 'Link', 'options': 'Patient', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'doctor', 'label': 'Doctor', 'fieldtype': 'Link', 'options': 'Doctor', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'column_break_1', 'fieldtype': 'Column Break'},
+                {'fieldname': 'record_date', 'label': 'Record Date', 'fieldtype': 'Date', 'reqd': 1, 'default': 'Today', 'in_list_view': 1},
+                {'fieldname': 'section_break_2', 'fieldtype': 'Section Break', 'label': 'Record Type'},
+                {'fieldname': 'record_type', 'label': 'Record Type', 'fieldtype': 'Select', 
+                 'options': '\nLab Results\nX-Ray\nMRI\nCT Scan\nPrescription\nDiagnosis', 'reqd': 1, 'in_list_view': 1},
+                {'fieldname': 'category', 'label': 'Category', 'fieldtype': 'Select', 
+                 'options': '\nLaboratory\nImaging\nMedication\nDiagnosis\nSurgery', 'reqd': 1},
+                {'fieldname': 'section_break_3', 'fieldtype': 'Section Break', 'label': 'Description'},
+                {'fieldname': 'description', 'label': 'Description', 'fieldtype': 'Text Editor'},
+                {'fieldname': 'section_break_4', 'fieldtype': 'Section Break', 'label': 'File Attachment'},
+                {'fieldname': 'file_attachment', 'label': 'File Attachment', 'fieldtype': 'Attach'},
+                {'fieldname': 'file_size', 'label': 'File Size', 'fieldtype': 'Data', 'read_only': 1}
+            ]
+        }
+    }
+    
+    for doctype_name, config in doctypes_config.items():
+        try:
+            # Check if doctype already exists
+            if frappe.db.exists('DocType', doctype_name):
+                print(f"DocType '{doctype_name}' already exists. Skipping...")
+                continue
+            
+            # Create new doctype
+            doc = frappe.get_doc({
+                'doctype': 'DocType',
+                'name': doctype_name,
+                'module': 'MediSync Backend',
+                'custom': 0,
+                'istable': 0,
+                'editable_grid': 1,
+                'track_changes': 1,
+                'naming_rule': 'Expression',
+                'autoname': config['autoname'],
+                'fields': config['fields'],
+                'permissions': [
+                    {
+                        'role': 'System Manager',
+                        'read': 1,
+                        'write': 1,
+                        'create': 1,
+                        'delete': 1
+                    }
+                ]
+            })
+            
+            doc.insert()
+            frappe.db.commit()
+            print(f"✓ DocType '{doctype_name}' created successfully!")
+            
+        except Exception as e:
+            print(f"✗ Error creating DocType '{doctype_name}': {str(e)}")
+            frappe.db.rollback()
+
+# Run the function
+create_all_doctypes()
+2025-10-12 22:24:52,801 INFO ipython # Check if doctypes exist
+doctypes = ['Patient', 'Doctor', 'Appointment', 'Medical Record']
+
+for dt in doctypes:
+    exists = frappe.db.exists('DocType', dt)
+    print(f"{dt}: {'✓ Exists' if exists else '✗ Not Found'}")
+    
+2025-10-12 22:24:52,801 INFO ipython # Add sample patients
+patients_data = [
+    {'patient_name': 'Sarah Johnson', 'age': 34, 'phone': '(555) 123-4567', 'email': 'sarah.j@email.com'},
+    {'patient_name': 'Michael Brown', 'age': 45, 'phone': '(555) 234-5678', 'email': 'michael.b@email.com'},
+    {'patient_name': 'Emily Davis', 'age': 28, 'phone': '(555) 345-6789', 'email': 'emily.d@email.com'}
+]
+
+for data in patients_data:
+    patient = frappe.get_doc({
+        'doctype': 'Patient',
+        **data
+    })
+    patient.insert()
+
+frappe.db.commit()
+print("Sample patients added!")
+
+# Add sample doctors
+doctors_data = [
+    {'doctor_name': 'Dr. Michael Chen', 'specialty': 'Cardiology', 'experience': '15 years', 'available': 1, 'rating': 4.9, 'location': 'Building A, Floor 3'},
+    {'doctor_name': 'Dr. Sarah Williams', 'specialty': 'Pediatrics', 'experience': '10 years', 'available': 1, 'rating': 4.8, 'location': 'Building B, Floor 2'}
+]
+
+for data in doctors_data:
+    doctor = frappe.get_doc({
+        'doctype': 'Doctor',
+        **data
+    })
+    doctor.insert()
+
+frappe.db.commit()
+print("Sample doctors added!")
+2025-10-12 22:24:52,801 INFO ipython === session end ===
+2025-10-14 23:13:44,650 INFO ipython === bench console session ===
+2025-10-14 23:13:44,659 INFO ipython import frappe
+
+def complete_role_setup():
+    """Complete role and permission setup for MediSync"""
+    
+    print("=" * 60)
+    print("MEDISYNC ROLE & PERMISSION SETUP")
+    print("=" * 60)
+    
+    # 1. Create Roles
+    print("\n[1/4] Creating Roles...")
+    print("-" * 60)
+    
+    roles = [
+        {
+            'role_name': 'Patient',
+            'desk_access': 0,
+            'description': 'Patient role with limited access to view appointments and records'
+        },
+        {
+            'role_name': 'Doctor',
+            'desk_access': 1,
+            'description': 'Doctor role with access to manage patients, appointments, and records'
+        },
+        {
+            'role_name': 'Nurse',
+            'desk_access': 1,
+            'description': 'Nurse role with access to view and update patient information'
+        },
+        {
+            'role_name': 'Receptionist',
+            'desk_access': 1,
+            'description': 'Receptionist role with access to manage appointments'
+        }
+    ]
+    
+    for role_data in roles:
+        try:
+            if frappe.db.exists('Role', role_data['role_name']):
+                print(f"  Role '{role_data['role_name']}' already exists. Skipping...")
+                continue
+            
+            role = frappe.get_doc({
+                'doctype': 'Role',
+                'role_name': role_data['role_name'],
+                'desk_access': role_data['desk_access'],
+                'description': role_data['description']
+            })
+            role.insert()
+            frappe.db.commit()
+            print(f"  ✓ Role '{role_data['role_name']}' created")
+            
+        except Exception as e:
+            print(f"  ✗ Error creating role '{role_data['role_name']}': {str(e)}")
+            frappe.db.rollback()
+    
+    # 2. Set Permissions
+    print("\n[2/4] Setting DocType Permissions...")
+    print("-" * 60)
+    
+    permissions_config = {
+        'Patient': {
+            'Patient': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 0, 'create': 1, 'delete': 0},
+            'Medical Record': {'read': 1, 'write': 0, 'create': 0, 'delete': 0}
+        },
+        'Doctor': {
+            'Patient': {'read': 1, 'write': 1, 'create': 1, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 1, 'create': 1, 'delete': 0},
+            'Medical Record': {'read': 1, 'write': 1, 'create': 1, 'delete': 0}
+        },
+        'Nurse': {
+            'Patient': {'read': 1, 'write': 1, 'create': 0, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 1, 'create': 0, 'delete': 0},
+            'Medical Record': {'read': 1, 'write': 1, 'create': 1, 'delete': 0}
+        },
+        'Receptionist': {
+            'Patient': {'read': 1, 'write': 1, 'create': 1, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Medical Record': {'read': 1, 'write': 0, 'create': 0, 'delete': 0}
+        },
+        'System Manager': {
+            'Patient': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Doctor': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Appointment': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Medical Record': {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+        }
+    }
+    
+    for role, doctypes in permissions_config.items():
+        for doctype, perms in doctypes.items():
+            try:
+                if not frappe.db.exists('DocType', doctype):
+                    print(f"  DocType '{doctype}' does not exist. Skipping...")
+                    continue
+                
+                doctype_doc = frappe.get_doc('DocType', doctype)
+                
+                # Check if permission already exists
+                existing_perm = None
+                for perm in doctype_doc.permissions:
+                    if perm.role == role:
+                        existing_perm = perm
+                        break
+                
+                if existing_perm:
+                    existing_perm.read = perms.get('read', 0)
+                    existing_perm.write = perms.get('write', 0)
+                    existing_perm.create = perms.get('create', 0)
+                    existing_perm.delete = perms.get('delete', 0)
+                else:
+                    doctype_doc.append('permissions', {
+                        'role': role,
+                        'read': perms.get('read', 0),
+                        'write': perms.get('write', 0),
+                        'create': perms.get('create', 0),
+                        'delete': perms.get('delete', 0)
+                    })
+                
+                doctype_doc.save()
+                frappe.db.commit()
+                print(f"  ✓ Permission set for '{role}' on '{doctype}'")
+                
+            except Exception as e:
+                print(f"  ✗ Error setting permission: {str(e)}")
+                frappe.db.rollback()
+    
+    # 3. Create Test Users
+    print("\n[3/4] Creating Test Users...")
+    print("-" * 60)
+    
+    test_users = [
+        {
+            'email': 'patient@medisync.com',
+            'first_name': 'John',
+            'last_name': 'Patient',
+            'password': 'patient123',
+            'role': 'Patient'
+        },
+        {
+            'email': 'doctor@medisync.com',
+            'first_name': 'Dr. Sarah',
+            'last_name': 'Doctor',
+            'password': 'doctor123',
+            'role': 'Doctor'
+        },
+        {
+            'email': 'nurse@medisync.com',
+            'first_name': 'Jane',
+            'last_name': 'Nurse',
+            'password': 'nurse123',
+            'role': 'Nurse'
+        },
+        {
+            'email': 'receptionist@medisync.com',
+            'first_name': 'Mike',
+            'last_name': 'Receptionist',
+            'password': 'receptionist123',
+            'role': 'Receptionist'
+        }
+    ]
+    
+    for user_data in test_users:
+        try:
+            if frappe.db.exists('User', user_data['email']):
+                print(f"  User '{user_data['email']}' already exists. Skipping...")
+                continue
+            
+            user = frappe.get_doc({
+                'doctype': 'User',
+                'email': user_data['email'],
+                'first_name': user_data['first_name'],
+                'last_name': user_data['last_name'],
+                'full_name': f"{user_data['first_name']} {user_data['last_name']}",
+                'send_welcome_email': 0,
+                'user_type': 'System User'
+            })
+            
+            user.insert(ignore_permissions=True)
+            user.new_password = user_data['password']
+            user.save(ignore_permissions=True)
+            user.add_roles(user_data['role'])
+            
+            frappe.db.commit()
+            print(f"  ✓ User created: {user_data['email']} (Password: {user_data['password']})")
+            
+        except Exception as e:
+            print(f"  ✗ Error creating user: {str(e)}")
+            frappe.db.rollback()
+    
+    # 4. Summary
+    print("\n[4/4] Setup Complete!")
+    print("=" * 60)
+    print("\nTEST USER CREDENTIALS:")
+    print("-" * 60)
+    print("Administrator:")
+    print("  Email: administrator")
+    print("  Password: admin (or your admin password)")
+    print("\nPatient:")
+    print("  Email: patient@medisync.com")
+    print("  Password: patient123")
+    print("\nDoctor:")
+    print("  Email: doctor@medisync.com")
+    print("  Password: doctor123")
+    print("\nNurse:")
+    print("  Email: nurse@medisync.com")
+    print("  Password: nurse123")
+    print("\nReceptionist:")
+    print("  Email: receptionist@medisync.com")
+    print("  Password: receptionist123")
+    print("=" * 60)
+
+# Run complete setup
+complete_role_setup()
+2025-10-14 23:13:44,660 INFO ipython === session end ===
+2025-10-14 23:15:23,342 INFO ipython === bench console session ===
+2025-10-14 23:15:23,343 INFO ipython import frappe
+
+def complete_role_setup():
+    """Complete role and permission setup for MediSync"""
+    
+    print("=" * 60)
+    print("MEDISYNC ROLE & PERMISSION SETUP")
+    print("=" * 60)
+    
+    # 1. Create Roles
+    print("\n[1/4] Creating Roles...")
+    print("-" * 60)
+    
+    roles = [
+        {
+            'role_name': 'Patient',
+            'desk_access': 0,
+            'description': 'Patient role with limited access to view appointments and records'
+        },
+        {
+            'role_name': 'Doctor',
+            'desk_access': 1,
+            'description': 'Doctor role with access to manage patients, appointments, and records'
+        },
+        {
+            'role_name': 'Nurse',
+            'desk_access': 1,
+            'description': 'Nurse role with access to view and update patient information'
+        },
+        {
+            'role_name': 'Receptionist',
+            'desk_access': 1,
+            'description': 'Receptionist role with access to manage appointments'
+        }
+    ]
+    
+    for role_data in roles:
+        try:
+            if frappe.db.exists('Role', role_data['role_name']):
+                print(f"  Role '{role_data['role_name']}' already exists. Skipping...")
+                continue
+            
+            role = frappe.get_doc({
+                'doctype': 'Role',
+                'role_name': role_data['role_name'],
+                'desk_access': role_data['desk_access'],
+                'description': role_data['description']
+            })
+            role.insert()
+            frappe.db.commit()
+            print(f"  ✓ Role '{role_data['role_name']}' created")
+            
+        except Exception as e:
+            print(f"  ✗ Error creating role '{role_data['role_name']}': {str(e)}")
+            frappe.db.rollback()
+    
+    # 2. Set Permissions
+    print("\n[2/4] Setting DocType Permissions...")
+    print("-" * 60)
+    
+    permissions_config = {
+        'Patient': {
+            'Patient': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 0, 'create': 1, 'delete': 0},
+            'Medical Record': {'read': 1, 'write': 0, 'create': 0, 'delete': 0}
+        },
+        'Doctor': {
+            'Patient': {'read': 1, 'write': 1, 'create': 1, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 1, 'create': 1, 'delete': 0},
+            'Medical Record': {'read': 1, 'write': 1, 'create': 1, 'delete': 0}
+        },
+        'Nurse': {
+            'Patient': {'read': 1, 'write': 1, 'create': 0, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 1, 'create': 0, 'delete': 0},
+            'Medical Record': {'read': 1, 'write': 1, 'create': 1, 'delete': 0}
+        },
+        'Receptionist': {
+            'Patient': {'read': 1, 'write': 1, 'create': 1, 'delete': 0},
+            'Doctor': {'read': 1, 'write': 0, 'create': 0, 'delete': 0},
+            'Appointment': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Medical Record': {'read': 1, 'write': 0, 'create': 0, 'delete': 0}
+        },
+        'System Manager': {
+            'Patient': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Doctor': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Appointment': {'read': 1, 'write': 1, 'create': 1, 'delete': 1},
+            'Medical Record': {'read': 1, 'write': 1, 'create': 1, 'delete': 1}
+        }
+    }
+    
+    for role, doctypes in permissions_config.items():
+        for doctype, perms in doctypes.items():
+            try:
+                if not frappe.db.exists('DocType', doctype):
+                    print(f"  DocType '{doctype}' does not exist. Skipping...")
+                    continue
+                
+                doctype_doc = frappe.get_doc('DocType', doctype)
+                
+                # Check if permission already exists
+                existing_perm = None
+                for perm in doctype_doc.permissions:
+                    if perm.role == role:
+                        existing_perm = perm
+                        break
+                
+                if existing_perm:
+                    existing_perm.read = perms.get('read', 0)
+                    existing_perm.write = perms.get('write', 0)
+                    existing_perm.create = perms.get('create', 0)
+                    existing_perm.delete = perms.get('delete', 0)
+                else:
+                    doctype_doc.append('permissions', {
+                        'role': role,
+                        'read': perms.get('read', 0),
+                        'write': perms.get('write', 0),
+                        'create': perms.get('create', 0),
+                        'delete': perms.get('delete', 0)
+                    })
+                
+                doctype_doc.save()
+                frappe.db.commit()
+                print(f"  ✓ Permission set for '{role}' on '{doctype}'")
+                
+            except Exception as e:
+                print(f"  ✗ Error setting permission: {str(e)}")
+                frappe.db.rollback()
+    
+    # 3. Create Test Users
+    print("\n[3/4] Creating Test Users...")
+    print("-" * 60)
+    
+    test_users = [
+        {
+            'email': 'patient@medisync.com',
+            'first_name': 'John',
+            'last_name': 'Patient',
+            'password': 'patient123',
+            'role': 'Patient'
+        },
+        {
+            'email': 'doctor@medisync.com',
+            'first_name': 'Dr. Sarah',
+            'last_name': 'Doctor',
+            'password': 'doctor123',
+            'role': 'Doctor'
+        },
+        {
+            'email': 'nurse@medisync.com',
+            'first_name': 'Jane',
+            'last_name': 'Nurse',
+            'password': 'nurse123',
+            'role': 'Nurse'
+        },
+        {
+            'email': 'receptionist@medisync.com',
+            'first_name': 'Mike',
+            'last_name': 'Receptionist',
+            'password': 'receptionist123',
+            'role': 'Receptionist'
+        }
+    ]
+    
+    for user_data in test_users:
+        try:
+            if frappe.db.exists('User', user_data['email']):
+                print(f"  User '{user_data['email']}' already exists. Skipping...")
+                continue
+            
+            user = frappe.get_doc({
+                'doctype': 'User',
+                'email': user_data['email'],
+                'first_name': user_data['first_name'],
+                'last_name': user_data['last_name'],
+                'full_name': f"{user_data['first_name']} {user_data['last_name']}",
+                'send_welcome_email': 0,
+                'user_type': 'System User'
+            })
+            
+            user.insert(ignore_permissions=True)
+            user.new_password = user_data['password']
+            user.save(ignore_permissions=True)
+            user.add_roles(user_data['role'])
+            
+            frappe.db.commit()
+            print(f"  ✓ User created: {user_data['email']} (Password: {user_data['password']})")
+            
+        except Exception as e:
+            print(f"  ✗ Error creating user: {str(e)}")
+            frappe.db.rollback()
+    
+    # 4. Summary
+    print("\n[4/4] Setup Complete!")
+    print("=" * 60)
+    print("\nTEST USER CREDENTIALS:")
+    print("-" * 60)
+    print("Administrator:")
+    print("  Email: administrator")
+    print("  Password: admin (or your admin password)")
+    print("\nPatient:")
+    print("  Email: patient@medisync.com")
+    print("  Password: patient123")
+    print("\nDoctor:")
+    print("  Email: doctor@medisync.com")
+    print("  Password: doctor123")
+    print("\nNurse:")
+    print("  Email: nurse@medisync.com")
+    print("  Password: nurse123")
+    print("\nReceptionist:")
+    print("  Email: receptionist@medisync.com")
+    print("  Password: receptionist123")
+    print("=" * 60)
+
+# Run complete setup
+complete_role_setup()
+2025-10-14 23:15:23,343 INFO ipython === session end ===
+2025-10-14 23:17:08,642 INFO ipython === bench console session ===
+2025-10-14 23:17:08,642 INFO ipython # Verify roles were created
+print("\nVerifying Roles:")
+print("-" * 40)
+roles = frappe.get_all('Role', 
+    filters={'name': ['in', ['Patient', 'Doctor', 'Nurse', 'Receptionist']]},
+    fields=['name', 'desk_access', 'description']
+)
+for role in roles:
+    print(f"✓ {role.name} - Desk Access: {role.desk_access}")
+
+# Verify users were created
+print("\nVerifying Users:")
+print("-" * 40)
+users = frappe.get_all('User',
+    filters={'email': ['like', '%@medisync.com']},
+    fields=['email', 'full_name', 'enabled']
+)
+for user in users:
+    print(f"✓ {user.email} - {user.full_name} (Active: {user.enabled})")
+
+# Exit console
+exit()
+2025-10-14 23:17:08,642 INFO ipython === session end ===
+2025-10-14 23:21:00,145 INFO ipython === bench console session ===
+2025-10-14 23:21:00,145 INFO ipython import frappe
+
+# Verify roles were created (without description field)
+print("\nVerifying Roles:")
+print("-" * 40)
+roles = frappe.get_all('Role', 
+    filters={'name': ['in', ['Patient', 'Doctor', 'Nurse', 'Receptionist']]},
+    fields=['name', 'desk_access']
+)
+for role in roles:
+    print(f"✓ {role.name} - Desk Access: {role.desk_access}")
+    
+2025-10-14 23:21:00,145 INFO ipython import frappe
+
+def create_test_users_fixed():
+    """Create test users with better error handling"""
+    
+    test_users = [
+        {
+            'email': 'patient@medisync.com',
+            'first_name': 'John',
+            'last_name': 'Patient',
+            'password': 'patient123',
+            'role': 'Patient',
+            'user_type': 'Website User'
+        },
+        {
+            'email': 'doctor@medisync.com',
+            'first_name': 'Sarah',
+            'last_name': 'Doctor',
+            'password': 'doctor123',
+            'role': 'Doctor',
+            'user_type': 'System User'
+        },
+        {
+            'email': 'nurse@medisync.com',
+            'first_name': 'Jane',
+            'last_name': 'Nurse',
+            'password': 'nurse123',
+            'role': 'Nurse',
+            'user_type': 'System User'
+        },
+        {
+            'email': 'receptionist@medisync.com',
+            'first_name': 'Mike',
+            'last_name': 'Receptionist',
+            'password': 'receptionist123',
+            'role': 'Receptionist',
+            'user_type': 'System User'
+        }
+    ]
+    
+    print("\nCreating Test Users:")
+    print("-" * 60)
+    
+    for user_data in test_users:
+        try:
+            # Check if user already exists
+            if frappe.db.exists('User', user_data['email']):
+                print(f"  User '{user_data['email']}' already exists. Skipping...")
+                continue
+            
+            # Create new user
+            user = frappe.get_doc({
+                'doctype': 'User',
+                'email': user_data['email'],
+                'first_name': user_data['first_name'],
+                'last_name': user_data['last_name'],
+                'full_name': f"{user_data['first_name']} {user_data['last_name']}",
+                'send_welcome_email': 0,
+                'user_type': user_data['user_type'],
+                'enabled': 1
+            })
+            
+            # Insert user
+            user.flags.ignore_permissions = True
+            user.flags.ignore_password_policy = True
+            user.insert()
+            
+            # Set password
+            from frappe.utils.password import update_password
+            update_password(user.name, user_data['password'])
+            
+            # Add role
+            user.add_roles(user_data['role'])
+            
+            frappe.db.commit()
+            print(f"  ✓ User created: {user_data['email']} (Password: {user_data['password']})")
+            
+        except Exception as e:
+            print(f"  ✗ Error creating user '{user_data['email']}': {str(e)}")
+            import traceback
+            print(traceback.format_exc())
+            frappe.db.rollback()
+    
+    print("-" * 60)
+
+# Run the function
+create_test_users_fixed()
+2025-10-14 23:21:00,146 INFO ipython import frappe
+
+# Verify users were created
+print("\nVerifying Users:")
+print("-" * 40)
+users = frappe.get_all('User',
+    filters={'email': ['like', '%@medisync.com']},
+    fields=['email', 'full_name', 'enabled', 'user_type']
+)
+
+if users:
+    for user in users:
+        print(f"✓ {user.email} - {user.full_name} (Active: {user.enabled}, Type: {user.user_type})")
+else:
+    print("No users found with @medisync.com email")
+    
+2025-10-14 23:21:00,146 INFO ipython import frappe
+
+# Check roles for each user
+print("\nUser Roles:")
+print("-" * 40)
+
+emails = ['patient@medisync.com', 'doctor@medisync.com', 'nurse@medisync.com', 'receptionist@medisync.com']
+
+for email in emails:
+    if frappe.db.exists('User', email):
+        user = frappe.get_doc('User', email)
+        user_roles = [role.role for role in user.roles]
+        print(f"{email}:")
+        print(f"  Roles: {', '.join(user_roles)}")
+    else:
+        print(f"{email}: Not found")
+        
+2025-10-14 23:21:00,146 INFO ipython === session end ===

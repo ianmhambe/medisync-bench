@@ -1,0 +1,123 @@
+2025-10-12 21:52:35,127 DEBUG cd medisync-bench && python3 -m venv env
+2025-10-12 21:52:40,171 DEBUG cd medisync-bench && /home/mhambe/medisync-bench/env/bin/python -m pip install --quiet --upgrade pip
+2025-10-12 21:52:43,196 DEBUG cd medisync-bench && /home/mhambe/medisync-bench/env/bin/python -m pip install --quiet wheel
+2025-10-12 21:52:46,268 LOG Getting frappe
+2025-10-12 21:52:46,268 DEBUG cd medisync-bench/apps && git clone https://github.com/frappe/frappe.git --branch version-15 --depth 1 --origin upstream
+2025-10-12 21:52:54,532 LOG Installing frappe
+2025-10-12 21:52:54,535 DEBUG cd /home/mhambe/medisync-bench && /home/mhambe/medisync-bench/env/bin/python -m pip install --quiet --upgrade -e /home/mhambe/medisync-bench/apps/frappe 
+2025-10-12 21:55:12,588 DEBUG cd /home/mhambe/medisync-bench/apps/frappe && yarn install --check-files
+2025-10-12 21:55:23,983 DEBUG cd medisync-bench && bench build
+2025-10-12 21:55:24,178 INFO /home/mhambe/frappe-venv/bin/bench build
+2025-10-12 21:55:47,626 LOG setting up backups
+2025-10-12 21:55:47,654 LOG backups were set up
+2025-10-12 21:55:47,654 INFO Bench medisync-bench initialized
+2025-10-12 21:55:48,440 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-12 21:56:57,864 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-12 21:56:58,257 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-12 21:56:58,263 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-12 21:56:58,340 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-12 21:56:58,350 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-12 21:57:36,931 INFO /home/mhambe/frappe-venv/bin/bench new-app medisync_backend
+2025-10-12 21:57:36,937 LOG creating new app medisync_backend
+2025-10-12 21:59:14,187 LOG Installing medisync_backend
+2025-10-12 21:59:14,188 DEBUG cd /home/mhambe/medisync-bench && /home/mhambe/medisync-bench/env/bin/python -m pip install --quiet --upgrade -e /home/mhambe/medisync-bench/apps/medisync_backend 
+2025-10-12 21:59:17,243 DEBUG bench build --app medisync_backend
+2025-10-12 21:59:17,446 INFO /home/mhambe/frappe-venv/bin/bench build --app medisync_backend
+2025-10-12 21:59:20,621 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-12 21:59:32,156 INFO /home/mhambe/frappe-venv/bin/bench new-site medisync.local
+2025-10-12 22:00:46,189 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local install-app medisync_backend
+2025-10-12 22:01:03,966 INFO /home/mhambe/frappe-venv/bin/bench use medisync.local
+2025-10-12 22:04:01,830 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-12 22:04:02,189 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-12 22:04:02,191 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-12 22:04:02,222 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-12 22:04:02,261 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-12 22:17:21,272 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local console
+2025-10-12 22:20:56,020 INFO /home/mhambe/frappe-venv/bin/bench restart
+2025-10-12 22:20:56,326 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-12 22:21:28,869 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local console
+2025-10-12 22:43:03,641 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-12 22:43:03,873 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-12 22:43:03,897 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-12 22:43:03,916 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-12 22:43:03,927 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-12 22:46:30,105 INFO /home/mhambe/frappe-venv/bin/bench build
+2025-10-12 22:46:53,895 INFO /home/mhambe/frappe-venv/bin/bench build
+2025-10-12 22:47:13,168 INFO /home/mhambe/frappe-venv/bin/bench migrate
+2025-10-12 22:50:28,056 INFO /home/mhambe/frappe-venv/bin/bench restart
+2025-10-12 22:50:28,392 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-12 22:50:37,535 INFO /home/mhambe/frappe-venv/bin/bench migrate
+2025-10-12 22:52:27,624 INFO /home/mhambe/frappe-venv/bin/bench restart
+2025-10-12 22:52:27,929 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-12 22:52:34,577 INFO /home/mhambe/frappe-venv/bin/bench migrate
+2025-10-12 22:52:47,212 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-12 22:52:47,452 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-12 22:52:47,456 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-12 22:52:47,507 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-12 22:52:47,516 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-12 22:52:55,461 INFO /home/mhambe/frappe-venv/bin/bench migrate
+2025-10-13 12:00:01,581 INFO /home/mhambe/frappe-venv/bin/bench --verbose --site all backup
+2025-10-13 18:00:01,436 INFO /home/mhambe/frappe-venv/bin/bench --verbose --site all backup
+2025-10-13 19:14:00,396 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-13 19:14:00,849 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-13 19:14:00,865 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-13 19:14:00,888 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-13 19:14:00,902 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-14 08:59:57,988 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-14 08:59:58,389 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-14 08:59:58,411 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-14 08:59:58,412 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-14 08:59:58,418 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-14 11:31:06,689 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-14 11:31:07,058 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-14 11:31:07,059 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-14 11:31:07,065 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-14 11:31:07,167 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-14 12:00:01,409 INFO /home/mhambe/frappe-venv/bin/bench --verbose --site all backup
+2025-10-14 12:52:26,627 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-14 12:52:26,868 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-14 12:52:26,872 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-14 12:52:26,875 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-14 12:52:26,932 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-14 13:11:21,898 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-14 13:11:22,134 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-14 13:11:22,134 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-14 13:11:22,180 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-14 13:11:22,188 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-14 18:00:01,919 INFO /home/mhambe/frappe-venv/bin/bench --verbose --site all backup
+2025-10-14 23:03:04,265 INFO /home/mhambe/frappe-venv/bin/bench restart
+2025-10-14 23:03:04,724 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-14 23:03:16,191 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-14 23:03:16,592 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-14 23:03:16,605 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-14 23:03:16,640 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-14 23:03:16,649 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-14 23:13:08,934 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local console
+2025-10-14 23:13:55,543 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-14 23:13:55,913 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-14 23:13:55,913 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-14 23:13:55,918 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-14 23:13:56,006 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-14 23:14:30,899 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local console
+2025-10-14 23:15:30,637 INFO /home/mhambe/frappe-venv/bin/bench restart
+2025-10-14 23:15:31,629 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-14 23:15:54,297 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local console
+2025-10-14 23:18:17,908 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local console
+2025-10-14 23:21:09,065 INFO /home/mhambe/frappe-venv/bin/bench restart
+2025-10-14 23:21:10,508 INFO A newer version of bench is available: 5.25.9 → 5.25.11
+2025-10-15 11:06:10,341 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-15 11:06:10,767 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-15 11:06:10,777 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-15 11:06:10,794 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-15 11:06:10,809 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-15 12:00:01,371 INFO /home/mhambe/frappe-venv/bin/bench --verbose --site all backup
+2025-10-15 12:20:03,785 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-15 12:20:04,163 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-15 12:20:04,178 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-15 12:20:04,190 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-15 12:20:04,262 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-15 12:30:21,483 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-15 12:30:21,843 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-15 12:30:21,871 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-15 12:30:21,931 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-15 12:30:21,944 INFO /home/mhambe/frappe-venv/bin/bench worker
