@@ -28,3 +28,15 @@ Backup Summary for medisync.local at 2025-10-15 12:00:02.588895
 Config  : ./medisync.local/private/backups/20251015_120002-medisync_local-site_config_backup.json 235.0B
 Database: ./medisync.local/private/backups/20251015_120002-medisync_local-database.sql.gz         250.7KiB
 Backup for Site medisync.local has been successfully completed
+set -o pipefail; /usr/bin/mariadb-dump --user=_7cc2c1d0fb897462 --host=127.0.0.1 --port=3306 --password=********** --single-transaction --quick --lock-tables=false _7cc2c1d0fb897462 | /usr/bin/gzip >> ./medisync.local/private/backups/20251016_180003-medisync_local-database.sql.gz
+
+Backup Summary for medisync.local at 2025-10-16 18:00:06.172745
+Config  : ./medisync.local/private/backups/20251016_180003-medisync_local-site_config_backup.json 235.0B
+Database: ./medisync.local/private/backups/20251016_180003-medisync_local-database.sql.gz         253.4KiB
+Backup for Site medisync.local has been successfully completed
+set -o pipefail; /usr/bin/mariadb-dump --user=_7cc2c1d0fb897462 --host=127.0.0.1 --port=3306 --password=********** --single-transaction --quick --lock-tables=false _7cc2c1d0fb897462 | /usr/bin/gzip >> ./medisync.local/private/backups/20251017_120003-medisync_local-database.sql.gz
+
+Backup Summary for medisync.local at 2025-10-17 12:00:04.876425
+Config  : ./medisync.local/private/backups/20251017_120003-medisync_local-site_config_backup.json 235.0B
+Database: ./medisync.local/private/backups/20251017_120003-medisync_local-database.sql.gz         253.4KiB
+Backup for Site medisync.local has been successfully completed
