@@ -133,3 +133,9 @@
 2025-10-17 13:13:01,310 INFO /home/mhambe/frappe-venv/bin/bench worker
 2025-10-17 13:13:01,320 INFO /home/mhambe/frappe-venv/bin/bench schedule
 2025-10-17 13:13:01,321 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-18 10:19:37,040 INFO /home/mhambe/frappe-venv/bin/bench start
+2025-10-18 10:19:37,417 INFO /home/mhambe/frappe-venv/bin/bench worker
+2025-10-18 10:19:37,420 INFO /home/mhambe/frappe-venv/bin/bench watch
+2025-10-18 10:19:37,508 INFO /home/mhambe/frappe-venv/bin/bench schedule
+2025-10-18 10:19:37,510 INFO /home/mhambe/frappe-venv/bin/bench serve --port 8000
+2025-10-18 10:20:31,537 INFO /home/mhambe/frappe-venv/bin/bench --site medisync.local console

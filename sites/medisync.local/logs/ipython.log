@@ -883,3 +883,31 @@ for email in emails:
         print(f"{email}: Not found")
         
 2025-10-14 23:21:00,146 INFO ipython === session end ===
+2025-10-18 10:20:42,600 INFO ipython === bench console session ===
+2025-10-18 10:20:42,602 INFO ipython import frappe
+from datetime import datetime, timedelta
+
+# Add sample appointments for testing
+sample_appointments = []
+today = datetime.now()
+
+for i in range(7):
+    date = today - timedelta(days=i)
+    for j in range(3):
+        apt = frappe.get_doc({
+            'doctype': 'Appointment',
+            'patient': frappe.get_all('Patient', limit=1)[0].name if frappe.get_all('Patient') else None,
+            'doctor': frappe.get_all('Doctor', limit=1)[0].name if frappe.get_all('Doctor') else None,
+            'appointment_date': date.strftime('%Y-%m-%d'),
+            'appointment_time': f"{9 + j * 2}:00:00",
+            'appointment_type': ['Consultation', 'Follow-up', 'Check-up'][j % 3],
+            'status': ['Confirmed', 'Pending', 'Completed'][j % 3]
+        })
+        if apt.patient and apt.doctor:
+            apt.insert(ignore_permissions=True)
+            sample_appointments.append(apt.name)
+
+frappe.db.commit()
+print(f"Created {len(sample_appointments)} sample appointments")
+exit()
+2025-10-18 10:20:42,602 INFO ipython === session end ===
